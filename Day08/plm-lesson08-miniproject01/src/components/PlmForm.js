@@ -1,74 +1,68 @@
 import React, { Component } from "react";
 
 class PlmForm extends Component {
-  render() {
-    let { renderPlmStudent } = this.props;
+  constructor(props) {
+    super(props);
+    this.state = { ...props.renderPlmStudent };
+  }
 
-    if (!renderPlmStudent) {
-      return <div>Vui lòng chọn sinh viên để xem thông tin</div>;
+  componentDidUpdate(prevProps) {
+    if (prevProps.renderPlmStudent.plmID !== this.props.renderPlmStudent.plmID) {
+      this.setState({ ...this.props.renderPlmStudent });
     }
+  }
+
+  handleChange = (e) => {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
+  };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.onplmHandleEdit(this.state);
+  };
+
+  render() {
+    const { plmID, plmStudentName, plmAge, plmGender, plmBirthday, plmBirthPlace, plmAddress } = this.state;
 
     return (
-      <div>
-        <div className="card">
-          <div className="card-body">
-            <h3 className="card-title">Thông tin sinh viên</h3>
-            <form className="form-sample">
-              <div className="form-group row">
-                <label className="col-sm-3 col-form-label">Mã sinh viên</label>
-                <div className="col-sm-9">
-                  <input type="text" className="form-control" value={renderPlmStudent.plmID} readOnly />
-                </div>
-              </div>
-              <div className="form-group row">
-                <label className="col-sm-3 col-form-label">Tên sinh viên</label>
-                <div className="col-sm-9">
-                  <input type="text" className="form-control" value={renderPlmStudent.plmStudentName} readOnly />
-                </div>
-              </div>
-              <div className="form-group row">
-                <label className="col-sm-3 col-form-label">Tuổi</label>
-                <div className="col-sm-9">
-                  <input type="text" className="form-control" value={renderPlmStudent.plmAge} readOnly />
-                </div>
-              </div>
-              <div className="form-group row">
-                <label className="col-sm-3 col-form-label">Giới tính</label>
-                <div className="col-sm-9">
-                  <select className="form-control" value={renderPlmStudent.plmGender} readOnly>
-                    <option>Nam</option>
-                    <option>Nữ</option>
-                  </select>
-                </div>
-              </div>
-              <div className="form-group row">
-                <label className="col-sm-3 col-form-label">Ngày sinh</label>
-                <div className="col-sm-9">
-                  <input className="form-control" placeholder="dd/mm/yyyy" value={renderPlmStudent.plmBirthday} readOnly />
-                </div>
-              </div>
-              <div className="form-group row">
-                <label className="col-sm-3 col-form-label">Nơi sinh</label>
-                <div className="col-sm-9">
-                  <select className="form-control" value={renderPlmStudent.plmBirthPlace} readOnly>
-                    <option>Hà Nội</option>
-                    <option>TP. Hồ Chí Minh</option>
-                    <option>Đà Nẵng</option>
-                    <option>Quảng Ninh</option>
-                  </select>
-                </div>
-              </div>
-              <div className="form-group row">
-                <label className="col-sm-3 col-form-label">Địa chỉ</label>
-                <div className="col-sm-9">
-                  <textarea className="form-control" defaultValue={renderPlmStudent.plmAddress} readOnly />
-                </div>
-              </div>
-              <button type="submit" className="btn btn-primary me-2">
-                Submit
-              </button>
-            </form>
-          </div>
+      <div className="card">
+        <div className="card-body">
+          <h3 className="card-title">Thông tin sinh viên</h3>
+          <form onSubmit={this.handleSubmit}>
+            <div className="form-group">
+              <label>Mã sinh viên</label>
+              <input type="text" className="form-control" name="plmID" value={plmID} readOnly />
+            </div>
+            <div className="form-group">
+              <label>Tên sinh viên</label>
+              <input type="text" className="form-control" name="plmStudentName" value={plmStudentName} onChange={this.handleChange} />
+            </div>
+            <div className="form-group">
+              <label>Tuổi</label>
+              <input type="number" className="form-control" name="plmAge" value={plmAge} onChange={this.handleChange} />
+            </div>
+            <div className="form-group">
+              <label>Giới tính</label>
+              <select className="form-control" name="plmGender" value={plmGender} onChange={this.handleChange}>
+                <option value="Nam">Nam</option>
+                <option value="Nữ">Nữ</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label>Ngày sinh</label>
+              <input type="text" className="form-control" name="plmBirthday" value={plmBirthday} onChange={this.handleChange} />
+            </div>
+            <div className="form-group">
+              <label>Nơi sinh</label>
+              <input type="text" className="form-control" name="plmBirthPlace" value={plmBirthPlace} onChange={this.handleChange} />
+            </div>
+            <div className="form-group">
+              <label>Địa chỉ</label>
+              <textarea className="form-control" name="plmAddress" value={plmAddress} onChange={this.handleChange} />
+            </div>
+            <button type="submit" className="btn btn-primary">Lưu thay đổi</button>
+          </form>
         </div>
       </div>
     );
