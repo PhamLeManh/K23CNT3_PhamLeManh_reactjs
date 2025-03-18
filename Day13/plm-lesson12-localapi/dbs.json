@@ -1,0 +1,25 @@
+{
+    "users":[
+        {
+            "fullname":"PhamLeManh",
+            "age":20,
+            "class":"K23CNT3"         
+        },
+        {
+            "fullname":"PhamLeManh",
+            "age":20,
+            "class":"K23CNT3"         
+        },
+        {
+            "fullname":"PhamLeManh",
+            "age":20,
+            "class":"K23CNT3"        
+        }
+    ],
+    "student":[
+        {
+            "studentId":"SV001",
+            "studentName":"PhamLeManh"
+        }
+    ]
+}
